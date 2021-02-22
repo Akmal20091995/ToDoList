@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+</head>
+
+<body>
+    <div class="main" ng-app="myToDoList" ng-controller="myCtrl">
+        <h1>Todo List</h1>
+        <div class="search">
+            <input type="text" placeholder="Добавь в свой лист" ng-model="addMe">
+            <span ng-click="addItem()"><i class="fas fa-plus"></i></span>
+        </div>
+        <ul>
+            <li ng-repeat="x in works">{{x}}<i ng-click="removeItem($index)" class="fas fa-trash-alt"></i></li>
+        </ul>
+        <p>{{errortext}}</p>
+    </div>
+<script type="text/javascript">
+    var app = angular.module("myToDoList", []);
+    app.controller("myCtrl", function($scope){
+        $scope.works = ["Поесть","Попить","Поспать"];
+        $scope.addItem = function(){
+            $scope.errortext = "";
+            if(!$scope.addMe) {return;}
+            if($scope.works.indexOf($scope.addMe) == -1){
+                $scope.works.push($scope.addMe);
+            }
+            else{
+                $scope.errortext = "Задача добавлена для вас в список дел";
+            }
+        }
+        $scope.removeItem = function(x){
+            $scope.works.splice(x,1);
+        }
+    });
+</script>
+</body>
+
+</html>
